@@ -102,9 +102,38 @@ router.post("/getRecordsByUserId", function(req, res) {
 app.use('/api', router);
 
 // init server
-var server = app.listen(3000, function() {
-  var host = server.address().address;
-  var port = server.address().port;
+var http = require('http');
+var port = 3000;
+app.set('port', port);
+var server = http.createServer(app);
+server.listen(port);
+server.on('error', function(error) {
+  if (error.syscall !== 'listen') {
+    throw error;
+  }
 
-  console.log("DataScienceAndR Logging Server is at http://%s:%s", host, port);
+  var bind = typeof port === 'string'
+    ? 'Pipe ' + port
+    : 'Port ' + port;
+
+  // handle specific listen errors with friendly messages
+  switch (error.code) {
+    case 'EACCES':
+      console.error(bind + ' requires elevated privileges');
+      process.exit(1);
+      break;
+    case 'EADDRINUSE':
+      console.error(bind + ' is already in use');
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+});
+server.on('listening', function() {
+  var addr = server.address();
+  var bind = typeof addr === 'string'
+    ? 'pipe ' + addr
+    : 'port ' + addr.port;
+  console.log('Listening on ' + bind);
 });

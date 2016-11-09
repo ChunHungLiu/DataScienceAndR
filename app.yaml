@@ -1,0 +1,16 @@
+runtime: nodejs
+vm: true
+
+network:
+  forwarded_ports:
+    - 3000
+  instance_tag: app
+  name: tracking
+
+resources:
+  memory_gb: 0.5
+
+automatic_scaling:
+  max_num_instances: 2
+  cpu_utilization:
+    target_utilization: 0.9
