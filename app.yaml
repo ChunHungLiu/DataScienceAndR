@@ -10,5 +10,3 @@ automatic_scaling:
   max_num_instances: 2
   cpu_utilization:
     target_utilization: 0.9
-
-secure: never
