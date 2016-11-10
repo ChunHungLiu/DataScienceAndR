@@ -102,6 +102,6 @@ router.post("/getRecordsByUserId", function(req, res) {
 app.use('/api', router);
 
 // init server
-var server = app.listen(process.env.PORT || '3000', function() {
+var server = app.listen(process.env.PORT || '8080', function() {
   console.log('App listening on port %s', server.address().port);
 });

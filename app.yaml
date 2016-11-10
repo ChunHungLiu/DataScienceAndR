@@ -3,13 +3,12 @@ vm: true
 
 network:
   forwarded_ports:
-    - 3000
+    - 3000:8080
   instance_tag: app
-
-resources:
-  memory_gb: 0.5
 
 automatic_scaling:
   max_num_instances: 2
   cpu_utilization:
     target_utilization: 0.9
+
+secure: never
