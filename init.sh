@@ -9,10 +9,11 @@ sudo apt-get update && \
   export NVM_DIR="$HOME/.nvm" && \
   [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" && \
   nvm install v6.9.1 && \
-  nvm default v6.9.1 && \
+  nvm alias default 6.9.1 && \
   npm install
 
 rc=$?
 if [[ $rc != 0 ]]; then
   exit $rc;
 fi
+nohup npm start

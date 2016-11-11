@@ -72,16 +72,22 @@ router.post("/getManyRecords", function(req, res) {
   } else {
     num = +(req.body.num || 5);
   }
-  var query = datastoreClient.createQuery('used_record')
-    .order('created_at', {
-      descending : true
-    })
-    .limit(num)
-    ;
-  var now = Date.now();
+  var now = Date.now(), isQuery = false;
   if (now - entitiesCache.at > 1000 * 60) {
+    isQuery = true;
+  }
+  if (entitiesCache.entities.length < num) {
+    isQuery = true;
+  }
+  if (isQuery) {
     console.log("Query Google Datastore");
     // update entities
+    var query = datastoreClient.createQuery('used_record')
+      .order('created_at', {
+        descending : true
+      })
+      .limit(num)
+      ;
     return datastoreClient.runQuery(query, function(err, entities) {
       if (err) {
         errorPrinter(err);
@@ -89,11 +95,11 @@ router.post("/getManyRecords", function(req, res) {
       } else {
         entitiesCache.at = Date.now();
         entitiesCache.entities = entities;
-        return res.json(entitiesCache.entities);
+        return res.json(entitiesCache.entities.slice(0, num));
       }
     });
   } else {
-    return res.json(entitiesCache.entities);
+    return res.json(entitiesCache.entities.slice(0, num));
   }
 });
 
