@@ -62,9 +62,9 @@ var entitiesCache = {
   entities : []
 };
 router.post("/getManyRecords", function(req, res) {
-  for(url in urls) {
+  urls.forEach(function(url) {
     res.header("Access-Control-Allow-Origin", url);
-  }
+  });
   res.header("Access-Control-Allow-Headers", "X-Requested-With");
   var num;
   if (isNaN(parseFloat(req.body.num))) {
