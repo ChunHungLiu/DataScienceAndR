@@ -5,8 +5,9 @@ sudo apt-get update && \
   sudo cp nginx/default /etc/nginx/sites-available/default && \
   sudo service nginx restart && \
   # setting node js
-  curl https://raw.githubusercontent.com/creationix/nvm/v0.16.1/install.sh | sh && \
-  source $HOME/.bashrc && \
+  curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.32.1/install.sh | bash && \
+  export NVM_DIR="$HOME/.nvm" && \
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" && \
   nvm install v6.9.1 && \
   nvm default v6.9.1 && \
   npm install
