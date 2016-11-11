@@ -18,6 +18,18 @@ function errorPrinter(err) {
 }
 
 var router = express.Router();
+
+router.use(function(req, res, next) {
+  // debugger;
+  console.log("Receive request: " + JSON.stringify({
+    "method" : req.method,
+    "originalUrl" : req.originalUrl,
+    "body" : req.body,
+    // "ip" : req.ip
+  }));
+  next();
+});
+
 router.post("/status", function(req, res) {
   var key = datastoreClient.key('used_record', Date.now());
   var obj = {
@@ -102,6 +114,6 @@ router.post("/getRecordsByUserId", function(req, res) {
 app.use('/api', router);
 
 // init server
-var server = app.listen(process.env.PORT || '8080', function() {
+var server = app.listen(process.env.PORT || '3000', function() {
   console.log('App listening on port %s', server.address().port);
 });
