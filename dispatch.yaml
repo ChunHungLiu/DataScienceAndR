@@ -1,0 +1,3 @@
+dispatch:
+  - url: "datascienceandr.appspot.com:3000/api/*"
+    module: default
