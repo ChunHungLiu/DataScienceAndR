@@ -6,6 +6,7 @@ sudo apt-get update && \
   sudo service nginx restart && \
   # setting node js
   curl https://raw.githubusercontent.com/creationix/nvm/v0.16.1/install.sh | sh && \
+  source $HOME/.bashrc && \
   nvm install v6.9.1 && \
   nvm default v6.9.1 && \
   npm install
