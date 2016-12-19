@@ -104,15 +104,25 @@ router.post("/getManyRecords", function(req, res) {
 });
 
 router.post("/getRecordsByUserId", function(req, res) {
-  var query = datastoreClient.createQuery('used_record')
+
+  var query1 = datastoreClient.createQuery('used_record')
     .filter('user_id', '=', req.body.user_id)
     ;
-  return datastoreClient.runQuery(query, function(err, entities) {
+  var query2 = datastoreClient.createQuery('used_record_backup')
+    .filter('user_id', '=', req.body.user_id)
+    ;
+  return datastoreClient.runQuery(query1, function(err, entities1) {
     if (err) {
       errorPrinter(err);
       return res.json({});
     } else {
-      return res.json(entities);
+      return datastoreClient.runQuery(query2, function(err, entities2) {
+        if (err) {
+          errorPrinter(err);
+          return res.json({});
+        }
+        return res.json(entities1.concat(entities2));
+      });
     }
   });
 });
